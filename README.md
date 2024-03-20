@@ -1,5 +1,5 @@
 # BackEnd_FastAPI_AcademySI
-Backend API restfull con Python y el framework fastAPI para el proyecto final de metodologías de desarrollo de sistemas de información enfocado a un proyecto tipo SIA (sistema de información académico)
+Backend API restfull con Python y el framework fastAPI para el desarrollo del proyecto final de metodologías de desarrollo de sistemas de información enfocado a un proyecto tipo SIA (sistema de información académico)
 
 
 # Instalar entorno virtual y requerimientos

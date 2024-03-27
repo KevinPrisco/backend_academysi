@@ -4,6 +4,7 @@ Backend API restfull con Python y el framework fastAPI para el desarrollo del pr
 
 # Instalar entorno virtual y requerimientos
 python3 -m venv venv
+
 pip install -r requirements.txt
 
 ## Agregar requerimientos al archivo de requerimientos

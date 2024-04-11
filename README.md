@@ -4,19 +4,18 @@ Backend API restfull con Python y el framework fastAPI para el desarrollo del pr
 
 # Instalar entorno virtual y requerimientos
 > python3 -m venv venv
-
 > pip install -r requirements.txt
 
 ## Agregar requerimientos al archivo de requerimientos
-pip freeze > requirements.txt
+> pip freeze > requirements.txt
 
 ## Activar el entorno virtual en Windows
-.\venv\Scripts\activate
+> .\venv\Scripts\activate
 
 
 # Ejecutar el proyecto
 ## ejecutar el proyecto en modo produccion
-uvicorn main:app --host x.x.x.x --port x
+> uvicorn main:app --host x.x.x.x --port x
 
 ## ejecutar el proyecto en modo debug
-uvicorn main:app --reload 
+> uvicorn main:app --reload 

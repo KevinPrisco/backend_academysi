@@ -8,6 +8,6 @@ SQLALCHEMY_DATABASE_URL = "mysql://root:@localhost/AcademySIBD"
 
 db_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-Sessionlocal = sessionmaker (bind=db_engine )
+Sessionlocal = sessionmaker (bind=db_engine)
 
 Base = declarative_base()

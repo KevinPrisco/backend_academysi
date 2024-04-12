@@ -10,3 +10,9 @@ class StudentCreate(BaseModel):
 
     # class Config:
     #     extra = Extra.forbid  
+
+
+class userBase(BaseModel):
+    id: int
+    username: str
+    password: str

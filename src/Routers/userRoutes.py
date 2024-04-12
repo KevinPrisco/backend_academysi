@@ -1,3 +1,4 @@
+from datetime import timedelta
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from Database import Connection
@@ -25,13 +26,18 @@ router  = APIRouter(
 )
 
 @router.post("/Login")
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session= Depends(get_db) ):
+def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session= Depends(get_db)) -> Token:
     try:
         usuario = usersController.getUserCredentials(db, form_data.username)
         hashkey = Auth.verify_hash_pass(form_data.password, usuario.password)
         if((usuario.username != form_data.username) or (not hashkey)):
             raise HTTPException(status_code=400, detail="Incorrect password")
-        return {"access_token": usuario, "token_type": "bearer"}    
+        
+        access_token_expires = timedelta(HOURS=Auth.ACCESS_TOKEN_EXPIRE_HOURS)
+        access_token = Auth.create_access_token(
+            data={"sub": usuario.username}, expires_delta=access_token_expires
+        )
+        return {"access_token": access_token, "token_type": "bearer"}    
     except NoResultFound as e:
         message = str(e)
         detail = {

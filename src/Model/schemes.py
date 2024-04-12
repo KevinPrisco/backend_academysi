@@ -9,4 +9,4 @@ class StudentCreate(BaseModel):
     nombre: str
 
     # class Config:
-    #     extra = Extra.forbid
+    #     extra = Extra.forbid  

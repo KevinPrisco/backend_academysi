@@ -6,5 +6,11 @@ class Student(Base):
     __tablename__ = "estudiantes"
     
     id_estudiantes = Column(Integer, primary_key=True, autoincrement= True)
-    nombre = Column(String(250))
+    nombre = Column(String(150))
 
+class User(Base):
+    __tablename__ = "Usuarios"
+    
+    id = Column(Integer, primary_key=True, autoincrement= True)
+    username = Column(String(150))
+    password = Column(String(150))

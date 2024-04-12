@@ -5,7 +5,8 @@ from Controllers import studentsController
 from Model import schemes
 from Database import Connection
 from sqlalchemy.orm.exc import NoResultFound
-from typing import Union, Any
+from Services import Auth
+from typing import Annotated
 
 def get_db():
     db = Connection.Sessionlocal()
@@ -21,7 +22,8 @@ router  = APIRouter(
 )
 
 @router.get("/getID/{id_student}", response_model= schemes.studentBase)
-def get_students(id_student: int,db: Session = Depends(get_db)):
+def get_students(id_student: int, db: Session = Depends(get_db)):
+    #token: Annotated[str, Depends(Auth.oauth2_scheme)],
     try:
         estudiantes = studentsController.getStudentById(db, id_student)
         return estudiantes

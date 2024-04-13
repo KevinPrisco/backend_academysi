@@ -14,3 +14,5 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement= True)
     username = Column(String(150))
     password = Column(String(150))
+
+

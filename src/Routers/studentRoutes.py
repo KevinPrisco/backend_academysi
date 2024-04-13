@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Request
+from Services import Auth
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from Controllers import studentsController
@@ -39,17 +40,25 @@ def get_students(id_student: int, db: Session = Depends(get_db)):
 
 
 @router.get("/getAll", response_model=list[schemes.studentBase])
-def get_students(db: Session =  Depends(get_db)):
-    try:
-        estudiantes = studentsController.getStudents(db)
-        return estudiantes
-    except BaseException as e:
-        message = str(e)
-        detail = {
-            "Status": 400,
-            "Message": message
-        }
-        return JSONResponse(status_code=400, content=detail)
+def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], db: Session =  Depends(get_db)):
+    user = token
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    else:
+        try:
+            estudiantes = studentsController.getStudents(db)
+            return estudiantes
+        except BaseException as e:
+            message = str(e)
+            detail = {
+                "Status": 400,
+                "Message": message
+            }
+            return JSONResponse(status_code=400, content=detail)
 
 
 

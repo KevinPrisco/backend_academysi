@@ -9,8 +9,8 @@ app.include_router(studentRoutes.router)
 app.include_router(userRoutes.router)
 
 @app.get("/")
-async def inicio(token: Annotated[str, Depends(Auth.oauth2_scheme)],):
-    user = await token
+async def inicio(token: Annotated[str, Depends(Auth.oauth2_scheme)]):
+    user = token
     if not user:
         raise HTTPException(
             status_code=401,

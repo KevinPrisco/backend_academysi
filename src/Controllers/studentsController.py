@@ -4,9 +4,9 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
-def getStudentById(db: Session, id_student: int):
+async def getStudentById(db: Session, id_student: int):
     try:
-        result = db.query(models.Student).filter(models.Student.id_estudiantes == id_student).first()
+        result = await db.query(models.Student).filter(models.Student.id_estudiantes == id_student).first()
         if not result:
             raise NoResultFound('Usuario no encontrado')
         return result
@@ -14,15 +14,16 @@ def getStudentById(db: Session, id_student: int):
         raise
 
 #LISTAR TODOS LOS ESTUDIANTES
-def getStudents(db: Session):
+async def getStudents(db: Session):
     try:
-        return db.query(models.Student).all()
+        result = await db.query(models.Student).all()
+        return result
     except:
         raise
 
 
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
-def createStudent(db: Session, _student: schemes.StudentCreate):
+async def createStudent(db: Session, _student: schemes.StudentCreate):
     try:
         db_student = models.Student(nombre = _student.nombre)
         db.add(db_student)
@@ -34,11 +35,11 @@ def createStudent(db: Session, _student: schemes.StudentCreate):
 
 
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
-def updateStudent(db: Session, _student: schemes.studentBase):
+async def updateStudent(db: Session, _student: schemes.studentBase):
     try:
         estudiante = db.query(models.Student).filter(models.Student.id_estudiantes == _student.id_estudiantes).first()
         estudiante.nombre = _student.nombre
-        db.commit()
+        await db.commit()
         db.refresh(estudiante)
         return estudiante
     except:
@@ -46,12 +47,12 @@ def updateStudent(db: Session, _student: schemes.studentBase):
 
 
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
-def deleteStudent(db: Session, id_student: int):
+async def deleteStudent(db: Session, id_student: int):
     try:
         db_student = db.query(models.Student).filter(models.Student.id_estudiantes == id_student).first()
         respuesta = { "Id": db_student.id_estudiantes, "nombre": db_student.nombre}
         db.delete(db_student)
-        db.commit()
+        await db.commit()
         result = 'Estudiante borrado exitosamente: ', respuesta
         return result
     except:

@@ -20,3 +20,7 @@ Backend API restfull con Python y el framework fastAPI para el desarrollo del pr
 
 ## ejecutar el proyecto en modo debug
 > uvicorn main:app --reload 
+
+# Migrar los modelos a la base de datos
+> alembic revision --autogenerate -m "Description"
+> alembic upgrade head

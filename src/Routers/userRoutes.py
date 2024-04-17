@@ -7,9 +7,10 @@ from Controllers import usersController
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm.exc import NoResultFound
-from fastapi import Depends, HTTPException, status
-from Model import schemes, models
+from fastapi import Depends, HTTPException
+from Model import schemes
 from Services import Auth
+from config import ACCESS_TOKEN_EXPIRE_HOURS
 
 
 def get_db():
@@ -28,16 +29,22 @@ router  = APIRouter(
 @router.post("/Login")
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session= Depends(get_db)) -> schemes.JWToken:
     try:
+        #Busca Si el usuario existe
         usuario = usersController.getUserCredentials(db, form_data.username)
+        #Verifica si la clave ingresada es igual a la clave almacenada en BD
         hashkey = Auth.verify_hash_pass(form_data.password, usuario.password)
+
+        #Verificar si el usuario y la contraseña son correctas
         if((usuario.username != form_data.username) or (not hashkey)):
             raise HTTPException(status_code=400, detail="Incorrect password")
         
-        access_token_expires = timedelta(hours=Auth.ACCESS_TOKEN_EXPIRE_HOURS)
+        #Llamar a la funcion para Crear el token de acceso 
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_HOURS)
         access_token = Auth.create_access_token(
             data={"sub": usuario.username}, expires_delta=access_token_expires
         )
-        return {"access_token": access_token, "token_type": "bearer"}    
+        return {"access_token": access_token, "token_type": "bearer"}   
+    
     except NoResultFound as e:
         message = str(e)
         detail = {

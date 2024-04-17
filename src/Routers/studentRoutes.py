@@ -23,7 +23,7 @@ router  = APIRouter(
 )
 
 @router.get("/getID/{id_student}", response_model= schemes.studentBase)
-def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student: int, db: Session = Depends(get_db)):
+async def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student: int, db: Session = Depends(get_db)):
     user = token
     if not user:
         raise HTTPException(
@@ -33,7 +33,7 @@ def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student:
         )
     else:
         try:
-            estudiantes = studentsController.getStudentById(db, id_student)
+            estudiantes = await studentsController.getStudentById(db, id_student)
             return estudiantes
         except NoResultFound as e:
             message = str(e)
@@ -47,7 +47,7 @@ def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student:
 
 
 @router.get("/getAll", response_model=list[schemes.studentBase])
-def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], db: Session =  Depends(get_db)):
+async def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], db: Session =  Depends(get_db)):
     user = token
     if not user:
         raise HTTPException(
@@ -57,7 +57,7 @@ def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], db: Session
         )
     else:
         try:
-            estudiantes = studentsController.getStudents(db)
+            estudiantes = await studentsController.getStudents(db)
             return estudiantes
         except BaseException as e:
             message = str(e)
@@ -70,7 +70,7 @@ def get_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], db: Session
 
 
 @router.post("/create", response_model=schemes.studentBase)
-def create_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], student: schemes.studentBase, db: Session = Depends(get_db)):
+async def create_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], student: schemes.studentBase, db: Session = Depends(get_db)):
     user = token
     if not user:
         raise HTTPException(
@@ -80,7 +80,7 @@ def create_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], student:
         )
     else:
         try:
-            estudiantes = studentsController.createStudent(db, _student = student)
+            estudiantes = await studentsController.createStudent(db, _student = student)
             return estudiantes
         except BaseException as e:
             message = str(e)
@@ -92,7 +92,7 @@ def create_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], student:
 
 
 @router.put("/update", response_model=schemes.studentBase)
-def update_students(token: Annotated[str, Depends(Auth.oauth2_scheme)],student: schemes.studentBase, db: Session = Depends(get_db)):
+async def update_students(token: Annotated[str, Depends(Auth.oauth2_scheme)],student: schemes.studentBase, db: Session = Depends(get_db)):
     user = token
     if not user:
         raise HTTPException(
@@ -102,7 +102,7 @@ def update_students(token: Annotated[str, Depends(Auth.oauth2_scheme)],student: 
         )
     else:
         try:
-            estudiantes = studentsController.updateStudent(db, _student = student)
+            estudiantes = await studentsController.updateStudent(db, _student = student)
             return estudiantes
         
         except BaseException as e:
@@ -115,7 +115,7 @@ def update_students(token: Annotated[str, Depends(Auth.oauth2_scheme)],student: 
 
 
 @router.delete("/delete/{id_student}")
-def delete_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student: int,db: Session = Depends(get_db)):
+async def delete_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_student: int,db: Session = Depends(get_db)):
     user = token
     if not user:
         raise HTTPException(
@@ -125,7 +125,7 @@ def delete_students(token: Annotated[str, Depends(Auth.oauth2_scheme)], id_stude
         )
     else:
         try: 
-            estudiantes = studentsController.deleteStudent(db, id_student)
+            estudiantes = await studentsController.deleteStudent(db, id_student)
             return estudiantes
         
         except BaseException as e:

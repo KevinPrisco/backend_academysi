@@ -8,7 +8,7 @@ from Services import Auth
 #LISTAR UN REGISTRO POR ID
 def getUserCredentials(db: Session, username: str):
     try:
-        result = db.query(models.User).filter(models.User.username == username).first()
+        result = db.query(models.usuarios).filter(models.usuarios.username == username).first()
         if not result:
             raise NoResultFound('User not found')
         return result
@@ -20,7 +20,7 @@ def getUserCredentials(db: Session, username: str):
 def createUser(db: Session, _user: schemes.userBase):
     try:
         hash = Auth.hash_pass(_user.password)
-        db_user = models.User(
+        db_user = models.usuarios(
             username = _user.username, 
             password = hash
             )

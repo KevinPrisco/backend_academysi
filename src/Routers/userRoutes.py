@@ -11,14 +11,8 @@ from fastapi import Depends, HTTPException
 from Model import schemes
 from Services import Auth
 from config import ACCESS_TOKEN_EXPIRE_HOURS
+from Database.Connection import get_db
 
-
-def get_db():
-    db = Connection.Sessionlocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 router  = APIRouter(
     prefix='/Users',    
@@ -43,7 +37,10 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
         access_token = Auth.create_access_token(
             data={"sub": usuario.username}, expires_delta=access_token_expires
         )
-        return {"access_token": access_token, "token_type": "bearer"}   
+        return {
+            "access_token": access_token, 
+            "token_type": "bearer"
+            }   
     
     except NoResultFound as e:
         message = str(e)

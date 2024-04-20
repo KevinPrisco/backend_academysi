@@ -1,6 +1,6 @@
 # "BDtype://user:password@dblocation/Dbname"
 DB_CONNECT = "mysql://root:@localhost/academysibd"
-#DB_CONNECT = "mysql://root:@localhost/AcademySIBD"
+# DB_CONNECT = "mysql://root:@localhost/AcademySIBD"
 
 
 #JWT TOKEN 

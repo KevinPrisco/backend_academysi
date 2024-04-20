@@ -5,18 +5,22 @@ Backend API restfull con Python y el framework fastAPI para el desarrollo del pr
 
 ## Instalar entorno virtual
 Instala un entorno virtual sobre el cual se van a instalar las dependencias y ejecutar el proyecto
+<br/>
 `python3 -m venv venv`
 
 ## Activar el entorno virtual en Windows
-Este comando se utiliza para iniciar un entorno virtual de python
+Inicia un entorno virtual de python
+<br/>
 `venv\Scripts\activate`
 
 ## Instalar requerimientos
-Antes de ejecutar el proyecto inicialmente el proyecto se debe instalar los requerimientos del proyecto con el siguiente comando
+Instala las dependencias para la ejecucion del proyecto
+<br/>
 `pip install -r requirements.txt`
 
 ## Actualizar el arhcivo de requerimientos
 Agrega las nuevas dependencias(librerias) instaladas al archivo de requerimientos
+<br/>
 `pip freeze > requirements.txt`
 
 
@@ -30,10 +34,13 @@ Agrega las nuevas dependencias(librerias) instaladas al archivo de requerimiento
 
 # Migrar los modelos a la base de datos
 Generar la plantilla del proyecto de Alembic usado para generar las migraciones
+<br/>
 `alembic init migraciones`
 
 Generar una revision de los cambios en la base de datos basado en los modelos para enviarlos a la base de datos
+<br/>
 `alembic revision --autogenerate -m "Description"`
 
 Genera una actualizacion en la base de datos basado en la ultima revision generada por el comando anterior
+<br/>
 `alembic upgrade head`

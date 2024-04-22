@@ -1,5 +1,6 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
-from sqlalchemy.orm import relationship
+from typing import List
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, Table
+from sqlalchemy.orm import relationship, Mapped
 from Database.Connection import Base
 
 # USUARIOS
@@ -9,7 +10,7 @@ class usuario(Base):
     id = Column(Integer, primary_key=True, autoincrement= True)
     username = Column(String(150))
     password = Column(String(150))
-    # permisos = Column(String)
+    permisos = Column(String(250))
 
 
 # ADMINISTRADOR
@@ -28,24 +29,21 @@ class estudiante(Base):
     nombre = Column(String(150))
 
 
+#ASOSIACION
+asociacion = Table(
+    "asociacion_año_grado",
+    Base.metadata,
+    Column("año_academico_id", ForeignKey("tb_año_academico.id_añoAcademico"), primary_key=True),
+    Column("grado_escolar_id", ForeignKey("tb_grado_escolar.id_gradoEscolar"), primary_key=True)
+)
+
+
 # AÑO ACADEMICO
 class año_academico(Base):
     __tablename__ = "tb_año_academico"
 
     id_añoAcademico = Column(Integer, primary_key=True, autoincrement=True)
     descripcion = Column(String(100))
-    rl_grado_escolar = relationship('añoAcademico_gradoEscolar', back_populates='rl_año_academico')
-
-
-# AÑO ACADEMICO - GRADO ESCOLAR
-class añoAcademico_gradoEscolar(Base):
-    __tablename__ = "tb_gradoEscolar_añoAcademico"
-
-    id =  Column(Integer, primary_key=True, autoincrement=True)
-    id_año_academico = Column(Integer, ForeignKey('tb_año_academico.id_añoAcademico'))
-    id_grado_escolar = Column(Integer, ForeignKey('tb_grado_escolar.id_gradoEscolar'))
-    rl_año_academico = relationship('año_academico', back_populates='rl_grado_escolar')
-    rl_grado_escolar = relationship('grado_escolar', back_populates='rl_año_academico')
 
 
 # GRADO ESCOLAR
@@ -54,9 +52,15 @@ class grado_escolar(Base):
 
     id_gradoEscolar = Column(Integer, primary_key=True, autoincrement=True)
     descripcion = Column(String(100))
-    rl_año_academico = relationship('añoAcademico_gradoEscolar', back_populates='rl_grado_escolar')
+    
 
 
+grados_escolares: Mapped[List[grado_escolar]] = relationship(
+    secondary=asociacion, back_populates='años_academicos'
+)
+años_academicos: Mapped[List[año_academico]] = relationship(
+   secondary=asociacion, back_populates='grados_escolares'
+)
 # PERIODO
 class periodo(Base):
     __tablename__ = "tb_periodos"

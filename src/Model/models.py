@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, Table
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from Database.Connection import Base
 
 # USUARIOS
@@ -21,15 +21,122 @@ class administrador(Base):
     nombre = Column(String(150))
 
 
+# GRUPOS
+class grupo(Base):
+    __tablename__ = "tb_grupos"
+
+    id_grupo = Column(Integer, primary_key=True, autoincrement=True)
+    descripcion = Column(String(150))
+    # RELACIONES
+    rl_estudiante: Mapped[list["estudiante"]] = relationship(back_populates="rl_grupo")
+
+    rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_grupo")
+
+
 # ESTUDIANTES
 class estudiante(Base):
     __tablename__ = "tb_estudiantes"
     
     id_estudiantes = Column(Integer, primary_key=True, autoincrement= True)
     nombre = Column(String(150))
+    # RELACIONES
+    grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"))
+    rl_grupo: Mapped["grupo"] = relationship(back_populates="rl_estudiante")
+
+    rl_calificacion: Mapped[list["calificaciones"]] = relationship(back_populates="rl_estudiante")
+    rl_asistencia: Mapped[list["asistencias"]] = relationship(back_populates="rl_estudiante")
 
 
-#ASOSIACION
+# CALIFICACIONES
+class calificaciones(Base):
+    __tablename__ = "tb_calificaciones"
+
+    id = Column(Integer, primary_key=True, autoincrement= True)
+    calificacion = Column(Float)
+    # RELACIONES
+    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
+    rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_calificacion")
+
+    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
+    rl_estudiante: Mapped["asignatura"] = relationship(back_populates="rl_calificacion")
+
+
+# ASISTENCIAS
+class asistencias(Base):
+    __tablename__ = "tb_asistencias"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    fecha = Column(String(50))
+    # RELACIONES
+    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
+    rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_asistencia")
+
+    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
+    rl_estudiante: Mapped["asignatura"] = relationship(back_populates="rl_asistencia")
+
+
+# ASIGNATURA
+class asignatura(Base):
+    __tablename__ = "tb_asignaturas"
+
+    id_asignatura = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(100))
+    # RELACIONES
+    rl_calificacion: Mapped[list["calificaciones"]] = relationship(back_populates="rl_asignatura")
+    rl_asistencia: Mapped[list["asistencias"]] = relationship(back_populates="rl_asignatura")
+
+    rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_asignatura")
+
+
+# GESTION ASIGNATURA
+class gestion_asignatura(Base):
+    __tablename__ = "tb_gestion_asignatura"
+    id_gestion = Column(Integer, primary_key=True, autoincrement=True)
+
+    # RELACIONES
+    rl_horario: Mapped[list["horario"]] = relationship(back_populates="rl_gestion")
+
+    grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"))
+    rl_grupo: Mapped["grupo"] = relationship(back_populates="rl_gestion")
+
+    docente_id: Mapped[int] = mapped_column(ForeignKey("tb_docentes.id_docente"))
+    rl_docente: Mapped["docente"] = relationship(back_populates="rl_gestion")
+
+    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
+    rl_asignatura: Mapped["asignatura"] = relationship(back_populates="rl_gestion")
+
+
+
+# DOCENTE
+class docente(Base):
+    __tablename__ = "tb_docentes"
+
+    id_docente = Column(Integer, primary_key=True, autoincrement= True)
+    nombre = Column(String(150))
+    apellidos = Column(String(150))
+
+    # RELACIONES
+    rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_docente")
+
+
+
+# HORARIO
+class horario(Base):
+    __tablename__ = "tb_horarios"
+
+    id_horario = Column(Integer, primary_key=True, autoincrement=True)
+
+    # RELACIONES
+    gestion_id: Mapped[int] = mapped_column(ForeignKey("tb_gestion_asignatura.id_gestion"))
+    rl_gestion: Mapped["asignatura"] = relationship(back_populates="rl_horario", single_parent=True)
+
+
+
+
+
+
+
+# ASOSIACION
 asociacion = Table(
     "asociacion_año_grado",
     Base.metadata,
@@ -61,6 +168,9 @@ grados_escolares: Mapped[List[grado_escolar]] = relationship(
 años_academicos: Mapped[List[año_academico]] = relationship(
    secondary=asociacion, back_populates='grados_escolares'
 )
+
+
+
 # PERIODO
 class periodo(Base):
     __tablename__ = "tb_periodos"
@@ -68,51 +178,4 @@ class periodo(Base):
     id_periodo = Column(Integer, primary_key=True, autoincrement=True)
     descripcion = Column(String(150))
     
-
-# GRUPOS
-class grupo(Base):
-    __tablename__ = "tb_grupos"
-
-    id_grupo = Column(Integer, primary_key=True, autoincrement=True)
-    descripcion = Column(String(150))
-
-
-# HORARIO
-class horario(Base):
-    __tablename__ = "tb_horarios"
-
-    id_horario = Column(Integer, primary_key=True, autoincrement=True)
-
-
-# ASIGNATURA
-class asignatura(Base):
-    __tablename__ = "tb_asignaturas"
-
-    id_asignatura = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(100))
-
-
-# DOCENTE
-class docente(Base):
-    __tablename__ = "tb_docentes"
-
-    id_docente = Column(Integer, primary_key=True, autoincrement= True)
-    nombre = Column(String(150))
-    apellidos = Column(String(150))
-
-
-# CALIFICACIONES
-class calificaciones(Base):
-    __tablename__ = "tb_calificaciones"
-
-    id = Column(Integer, primary_key=True, autoincrement= True)
-    calificacion = Column(Float)
-
-
-# ASISTENCIAS
-class asistencias(Base):
-    __tablename__ = "tb_asistencias"
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    fecha = Column(String(50))
 

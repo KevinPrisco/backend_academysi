@@ -21,7 +21,7 @@ Instala las dependencias para la ejecucion del proyecto
 pip install -r requirements.txt
 ```
 
-## Actualizar el arhcivo de requerimientos
+## Actualizar el archivo de requerimientos
 Agrega las nuevas dependencias(librerias) instaladas al archivo de requerimientos
 ```
 pip freeze > requirements.txt

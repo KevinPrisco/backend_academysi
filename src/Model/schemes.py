@@ -16,7 +16,7 @@ class userBase(BaseModel):
     id: int
     username: str
     password: str
-    # permisos: str
+    permisos: str
 
 class JWToken(BaseModel):
     access_token: str

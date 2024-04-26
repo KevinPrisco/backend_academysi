@@ -1,13 +1,9 @@
-from Services import Auth
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from Controllers import studentsController
 from Model import schemes
-from Database import Connection
 from sqlalchemy.orm.exc import NoResultFound
-from Services import Auth
-from typing import Annotated
 from Database.Connection import get_db
 from dependencies import get_current_user
 

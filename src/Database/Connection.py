@@ -7,7 +7,7 @@ SQLALCHEMY_DATABASE_URL = DB_CONNECT
 
 db_engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-Sessionlocal = sessionmaker (bind=db_engine)
+Sessionlocal = sessionmaker(bind=db_engine)
 
 Base = declarative_base()
 

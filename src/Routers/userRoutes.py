@@ -1,7 +1,6 @@
 from datetime import timedelta
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from Database import Connection
 from sqlalchemy.orm import Session
 from Controllers import usersController
 from typing import Annotated

@@ -34,7 +34,12 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
         #Llamar a la funcion para Crear el token de acceso 
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_HOURS)
         access_token = Auth.create_access_token(
-            data={"sub": usuario.username}, expires_delta=access_token_expires
+            data={
+                "id:": usuario.id ,
+                "sub": usuario.username,
+                "scope": usuario.permisos
+                }, 
+            expires_delta=access_token_expires
         )
         return {
             "access_token": access_token, 

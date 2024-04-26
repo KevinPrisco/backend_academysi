@@ -40,7 +40,7 @@ class estudiante(Base):
     id_estudiantes = Column(Integer, primary_key=True, autoincrement= True)
     nombre = Column(String(150))
     # RELACIONES
-    grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"))
+    grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"), nullable=True )
     rl_grupo: Mapped["grupo"] = relationship(back_populates="rl_estudiante")
 
     rl_calificacion: Mapped[list["calificaciones"]] = relationship(back_populates="rl_estudiante")

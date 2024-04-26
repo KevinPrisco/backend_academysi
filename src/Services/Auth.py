@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
+from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from jose import jwt
+from jose import jwt, JWTError
 from config import SECRET_KEY, ALGORITHM
 
 
@@ -27,3 +28,12 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     datos.update({"exp": expire})
     encoded_jwt = jwt.encode(datos, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+#Funcion Para validad si el token si esta firmado correctamente
+def token_access_validation(token: str = Depends(oauth2_scheme)):
+    try:
+        #decodifica el token usando la secret key y el algoritmo con el que fue codificado
+        jwt.decode(token, key=SECRET_KEY, algorithms=ALGORITHM)
+        return 'valido'
+    except:
+        return 'Error: Token no valido' 

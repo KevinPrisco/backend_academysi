@@ -22,7 +22,8 @@ def createUser(db: Session, _user: schemes.userBase):
         hash = Auth.hash_pass(_user.password)
         db_user = models.usuario(
             username = _user.username, 
-            password = hash
+            password = hash,
+            permisos = _user.permisos
             )
         db.add(db_user)
         db.commit()

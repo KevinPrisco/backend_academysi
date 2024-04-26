@@ -58,21 +58,7 @@ class calificaciones(Base):
     rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_calificacion")
 
     asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
-    rl_estudiante: Mapped["asignatura"] = relationship(back_populates="rl_calificacion")
-
-
-# ASISTENCIAS
-class asistencias(Base):
-    __tablename__ = "tb_asistencias"
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    fecha = Column(String(50))
-    # RELACIONES
-    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
-    rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_asistencia")
-
-    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
-    rl_estudiante: Mapped["asignatura"] = relationship(back_populates="rl_asistencia")
+    rl_asignatura: Mapped["asignatura"] = relationship(back_populates="rl_calificacion")
 
 
 # ASIGNATURA
@@ -86,6 +72,20 @@ class asignatura(Base):
     rl_asistencia: Mapped[list["asistencias"]] = relationship(back_populates="rl_asignatura")
 
     rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_asignatura")
+
+
+# ASISTENCIAS
+class asistencias(Base):
+    __tablename__ = "tb_asistencias"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    fecha = Column(String(50))
+    # RELACIONES
+    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
+    rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_asistencia")
+
+    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
+    rl_asignatura: Mapped["asignatura"] = relationship(back_populates="rl_asistencia")
 
 
 # GESTION ASIGNATURA
@@ -128,7 +128,7 @@ class horario(Base):
 
     # RELACIONES
     gestion_id: Mapped[int] = mapped_column(ForeignKey("tb_gestion_asignatura.id_gestion"))
-    rl_gestion: Mapped["asignatura"] = relationship(back_populates="rl_horario", single_parent=True)
+    rl_gestion: Mapped["gestion_asignatura"] = relationship(back_populates="rl_horario", single_parent=True)
 
 
 

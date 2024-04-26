@@ -5,13 +5,13 @@ from Controllers import studentsController
 from Model import schemes
 from sqlalchemy.orm.exc import NoResultFound
 from Database.Connection import get_db
-from dependencies import get_current_user
+from dependencies import get_current_user, get_token_scopes
 
 
 router  = APIRouter(
     prefix='/student',    
     tags=["Estudiantes"],
-    dependencies=[Depends(get_current_user)]
+    dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )
 
 

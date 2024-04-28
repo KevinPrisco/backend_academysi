@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from Controllers import studentsController
+from Controllers import teachersController
 from Model import schemes
 from sqlalchemy.orm.exc import NoResultFound
 from Database.Connection import get_db
@@ -9,17 +9,17 @@ from dependencies import get_current_user, get_token_scopes
 
 
 router  = APIRouter(
-    prefix='/student',    
-    tags=["Estudiantes"],
+    prefix='/teacher',    
+    tags=["Profesores"],
     dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )
 
 
-@router.get("/getbyid/{id_student}", response_model= schemes.studentList)
-def get_student(id_student: int, db: Session = Depends(get_db)):
+@router.get("/getbyid/{id_teacher}", response_model= schemes.teacherList)
+def get_teacher(id_teacher: int, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.getStudentById(db, id_student)
-        return estudiantes
+        docente = teachersController.getTeacherById(db, id_teacher)
+        return docente
     except NoResultFound as e:
         message = str(e)
         detail = {
@@ -29,11 +29,11 @@ def get_student(id_student: int, db: Session = Depends(get_db)):
         return JSONResponse(status_code=404, content=detail)
     
 
-@router.get("/get", response_model=list[schemes.studentList])
-def get_students(db: Session =  Depends(get_db)):
+@router.get("/get", response_model=list[schemes.teacherList])
+def get_teachers(db: Session =  Depends(get_db)):
     try:
-        estudiantes = studentsController.getStudents(db)
-        return estudiantes
+        docentes = teachersController.getTeachers(db)
+        return docentes
     except BaseException as e:
         message = str(e)
         detail = {
@@ -43,11 +43,11 @@ def get_students(db: Session =  Depends(get_db)):
         return JSONResponse(status_code=400, content=detail)
 
 
-@router.post("/create", response_model=schemes.studentCreate)
-def create_student(student: schemes.studentCreate, db: Session = Depends(get_db)):
+@router.post("/create", response_model=schemes.teacherList)
+def create_teacher(teacher: schemes.teacherCreate, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.createStudent(db, _student = student)
-        return estudiantes
+        docente = teachersController.createTeacher(db, _teacher = teacher)
+        return docente
     except BaseException as e:
         message = str(e)
         detail = {
@@ -57,11 +57,11 @@ def create_student(student: schemes.studentCreate, db: Session = Depends(get_db)
         return JSONResponse(status_code=400, content=detail)
 
 
-@router.put("/update", response_model=schemes.studentList)
-def update_student(student: schemes.studentList, db: Session = Depends(get_db)):
+@router.put("/update", response_model=schemes.teacherList)
+def update_teacher(teacher: schemes.teacherList, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.updateStudent(db, _student = student)
-        return estudiantes
+        docente = teachersController.updateTeacher(db, _teacher = teacher)
+        return docente
     
     except BaseException as e:
         message = str(e)
@@ -72,11 +72,11 @@ def update_student(student: schemes.studentList, db: Session = Depends(get_db)):
         return JSONResponse(status_code=400, content=detail)
 
 
-@router.delete("/delete/{id_student}")
-def delete_student(id_student: int,db: Session = Depends(get_db)):
+@router.delete("/delete/{id_teacher}")
+def delete_teacher(id_teacher: int,db: Session = Depends(get_db)):
     try: 
-        estudiantes = studentsController.deleteStudent(db, id_student)
-        return estudiantes
+        docente = teachersController.deleteTeacher(db, id_teacher)
+        return docente
     
     except BaseException as e:
         message = str(e)

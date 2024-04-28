@@ -39,6 +39,14 @@ class estudiante(Base):
     
     id_estudiantes = Column(Integer, primary_key=True, autoincrement= True)
     nombre = Column(String(150))
+    apellido = Column(String(150))
+    tipo_documento = Column(String(10))
+    documento = Column(String(20))
+    Email = Column(String(150))
+    carne = Column(String(20))
+    telefono = Column(String(100))
+    grado = Column(String(10))
+
     # RELACIONES
     grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"), nullable=True )
     rl_grupo: Mapped["grupo"] = relationship(back_populates="rl_estudiante")
@@ -129,10 +137,6 @@ class horario(Base):
     # RELACIONES
     gestion_id: Mapped[int] = mapped_column(ForeignKey("tb_gestion_asignatura.id_gestion"))
     rl_gestion: Mapped["gestion_asignatura"] = relationship(back_populates="rl_horario", single_parent=True)
-
-
-
-
 
 
 

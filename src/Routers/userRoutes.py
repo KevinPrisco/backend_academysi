@@ -1,16 +1,11 @@
-from datetime import timedelta
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
-from sqlalchemy.orm import Session
 from Controllers import usersController
+from Routers.commons import *
+from datetime import timedelta
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm.exc import NoResultFound
-from fastapi import Depends, HTTPException
-from Model import schemes
+from fastapi import HTTPException
 from Services import Auth
 from config import ACCESS_TOKEN_EXPIRE_HOURS
-from Database.Connection import get_db
 
 
 router  = APIRouter(

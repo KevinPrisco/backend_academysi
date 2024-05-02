@@ -1,12 +1,10 @@
-from sqlalchemy.orm import Session
-from Model import schemes, models
-from sqlalchemy.orm.exc import NoResultFound
+from Controllers.Commons import *
 
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 def getAdminById(db: Session, id_admin: int):
     try:
-        result = db.query(models.administrador).filter(models.administrador.id_administrador == id_admin).first()
+        result = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == id_admin).first()
         if not result:
             raise NoResultFound('Administrador no encontrado')
         return result
@@ -17,7 +15,7 @@ def getAdminById(db: Session, id_admin: int):
 #LISTAR TODOS LOS ESTUDIANTES
 def getAdmins(db: Session):
     try:
-        result = db.query(models.administrador).all()
+        result = db.query(Entities.administrador).all()
         return result
     except:
         raise
@@ -26,7 +24,7 @@ def getAdmins(db: Session):
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
 def createAdmin(db: Session, _admin: schemes.adminCreate):
     try:
-        administrador = models.administrador(
+        administrador = Entities.administrador(
             nombre = _admin.nombre,
             )
         db.add(administrador)
@@ -40,7 +38,7 @@ def createAdmin(db: Session, _admin: schemes.adminCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def updateAdmin(db: Session, _admin: schemes.adminList):
     try:
-        administrador = db.query(models.administrador).filter(models.administrador.id_administrador == _admin.id_administrador).first()
+        administrador = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == _admin.id_administrador).first()
         administrador.nombre = _admin.nombre
         db.commit()
         db.refresh(administrador)
@@ -53,7 +51,7 @@ def updateAdmin(db: Session, _admin: schemes.adminList):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def deleteAdmin(db: Session, id_admin: int):
     try:
-        db_admin = db.query(models.administrador).filter(models.administrador.id_administrador == id_admin).first()
+        db_admin = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == id_admin).first()
         respuesta = { "Id": db_admin.id_administrador, "nombre": db_admin.nombre}
         db.delete(db_admin)
         db.commit()

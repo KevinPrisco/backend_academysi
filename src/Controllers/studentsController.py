@@ -1,12 +1,10 @@
-from sqlalchemy.orm import Session
-from Model import schemes, models
-from sqlalchemy.orm.exc import NoResultFound
+from Controllers.Commons import *
 
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 def getStudentById(db: Session, id_student: int):
     try:
-        result = db.query(models.estudiante).filter(models.estudiante.id_estudiantes == id_student).first()
+        result = db.query(Entities.estudiante).filter(Entities.estudiante.id_estudiantes == id_student).first()
         print('hola:', result)
         if not result:
             raise NoResultFound('Usuario no encontrado')
@@ -18,7 +16,7 @@ def getStudentById(db: Session, id_student: int):
 #LISTAR TODOS LOS ESTUDIANTES
 def getStudents(db: Session):
     try:
-        result = db.query(models.estudiante).all()
+        result = db.query(Entities.estudiante).all()
         return result
     except:
         raise
@@ -27,7 +25,7 @@ def getStudents(db: Session):
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
 def createStudent(db: Session, _student: schemes.studentCreate):
     try:
-        db_student = models.estudiante(
+        db_student = Entities.estudiante(
             nombre = _student.nombre,
             apellido = _student.apellido,
             tipo_documento = _student.tipo_documento,
@@ -48,7 +46,7 @@ def createStudent(db: Session, _student: schemes.studentCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def updateStudent(db: Session, _student: schemes.studentBase):
     try:
-        estudiante = db.query(models.estudiante).filter(models.estudiante.id_estudiantes == _student.id_estudiantes).first()
+        estudiante = db.query(Entities.estudiante).filter(Entities.estudiante.id_estudiantes == _student.id_estudiantes).first()
         estudiante.nombre = _student.nombre
         db.commit()
         db.refresh(estudiante)
@@ -60,7 +58,7 @@ def updateStudent(db: Session, _student: schemes.studentBase):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def deleteStudent(db: Session, id_student: int):
     try:
-        db_student = db.query(models.estudiante).filter(models.estudiante.id_estudiantes == id_student).first()
+        db_student = db.query(Entities.estudiante).filter(Entities.estudiante.id_estudiantes == id_student).first()
         respuesta = { "Id": db_student.id_estudiantes, "nombre": db_student.nombre}
         db.delete(db_student)
         db.commit()

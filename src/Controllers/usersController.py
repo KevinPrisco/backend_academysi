@@ -1,14 +1,11 @@
-from sqlalchemy.orm import Session
-from Model import schemes, models
-from sqlalchemy.orm.exc import NoResultFound
+from Controllers.Commons import *
 from Services import Auth
-
 
 
 #LISTAR UN REGISTRO POR ID
 def getUserCredentials(db: Session, username: str):
     try:
-        result = db.query(models.usuario).filter(models.usuario.username == username).first()
+        result = db.query(Entities.usuario).filter(Entities.usuario.username == username).first()
         if not result:
             raise NoResultFound('User not found')
         return result
@@ -20,7 +17,7 @@ def getUserCredentials(db: Session, username: str):
 def createUser(db: Session, _user: schemes.userBase):
     try:
         hash = Auth.hash_pass(_user.password)
-        db_user = models.usuario(
+        db_user = Entities.usuario(
             username = _user.username, 
             password = hash,
             permisos = _user.permisos

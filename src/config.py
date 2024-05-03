@@ -1,6 +1,11 @@
 # "BDtype://user:password@dblocation/Dbname"
-DB_CONNECT = "mysql://root:@localhost/academysibd"
-# DB_CONNECT = "mysql://root:@localhost/AcademySIBD"
+# DB_CONNECT = "mysql://root:@localhost/academysibd"
+DB_DRIVER = "mysql"
+DB_USER = "root"
+DB_PASSWORD = ""
+DB_HOST = "localhost"
+DB_PORT: int
+DB_NAME = "academysibd"
 
 
 #JWT TOKEN 

@@ -1,10 +1,10 @@
 from Controllers.Commons import *
-
+from Model.Entities import administrador
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 def getAdminById(db: Session, id_admin: int):
     try:
-        result = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == id_admin).first()
+        result = db.query(administrador).filter(administrador.id_administrador == id_admin).first()
         if not result:
             raise NoResultFound('Administrador no encontrado')
         return result
@@ -15,7 +15,7 @@ def getAdminById(db: Session, id_admin: int):
 #LISTAR TODOS LOS ESTUDIANTES
 def getAdmins(db: Session):
     try:
-        result = db.query(Entities.administrador).all()
+        result = db.query(administrador).all()
         return result
     except:
         raise
@@ -24,13 +24,13 @@ def getAdmins(db: Session):
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
 def createAdmin(db: Session, _admin: schemes.adminCreate):
     try:
-        administrador = Entities.administrador(
+        result = administrador(
             nombre = _admin.nombre,
             )
-        db.add(administrador)
+        db.add(result)
         db.commit()
-        db.refresh(administrador)
-        return administrador
+        db.refresh(result)
+        return result
     except:
         raise
 
@@ -38,11 +38,11 @@ def createAdmin(db: Session, _admin: schemes.adminCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def updateAdmin(db: Session, _admin: schemes.adminList):
     try:
-        administrador = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == _admin.id_administrador).first()
-        administrador.nombre = _admin.nombre
+        result = db.query(administrador).filter(administrador.id_administrador == _admin.id_administrador).first()
+        result.nombre = _admin.nombre
         db.commit()
-        db.refresh(administrador)
-        return administrador
+        db.refresh(result)
+        return result
     except:
         db.rollback()
         raise
@@ -51,7 +51,7 @@ def updateAdmin(db: Session, _admin: schemes.adminList):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def deleteAdmin(db: Session, id_admin: int):
     try:
-        db_admin = db.query(Entities.administrador).filter(Entities.administrador.id_administrador == id_admin).first()
+        db_admin = db.query(administrador).filter(administrador.id_administrador == id_admin).first()
         respuesta = { "Id": db_admin.id_administrador, "nombre": db_admin.nombre}
         db.delete(db_admin)
         db.commit()

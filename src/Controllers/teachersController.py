@@ -1,10 +1,10 @@
 from Controllers.Commons import *
-
+from Model.Entities import docente
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 def getTeacherById(db: Session, id_teacher: int):
     try:
-        result = db.query(Entities.docente).filter(Entities.docente.id_docente == id_teacher).first()
+        result = db.query(docente).filter(docente.id_docente == id_teacher).first()
         if not result:
             raise NoResultFound('Docente no encontrado')
         return result
@@ -15,7 +15,7 @@ def getTeacherById(db: Session, id_teacher: int):
 #LISTAR TODOS LOS ESTUDIANTES
 def getTeachers(db: Session):
     try:
-        result = db.query(Entities.docente).all()
+        result = db.query(docente).all()
         return result
     except:
         raise
@@ -24,14 +24,14 @@ def getTeachers(db: Session):
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
 def createTeacher(db: Session, _teacher: schemes.teacherCreate):
     try:
-        docente = Entities.docente(
+        result = docente(
             nombre = _teacher.nombre,
             apellidos = _teacher.apellidos,
             )
-        db.add(docente)
+        db.add(result)
         db.commit()
-        db.refresh(docente)
-        return docente
+        db.refresh(result)
+        return result
     except:
         raise
 
@@ -39,13 +39,13 @@ def createTeacher(db: Session, _teacher: schemes.teacherCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def updateTeacher(db: Session, _teacher: schemes.teacherList):
     try:
-        docente = db.query(Entities.docente).filter(Entities.docente.id_docente == _teacher.id_teacher).first()
+        result = db.query(docente).filter(docente.id_docente == _teacher.id_docente).first()
         db.begin()
-        docente.nombre = _teacher.nombre
-        docente.apellidos = _teacher.apellidos
+        result.nombre = _teacher.nombre
+        result.apellidos = _teacher.apellidos
         db.commit()
-        db.refresh(docente)
-        return docente
+        db.refresh(result)
+        return result
     except:
         db.rollback()
         raise
@@ -54,7 +54,7 @@ def updateTeacher(db: Session, _teacher: schemes.teacherList):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def deleteTeacher(db: Session, id_teacher: int):
     try:
-        db_teacher = db.query(Entities.docente).filter(Entities.docente.id_docente == id_teacher).first()
+        db_teacher = db.query(docente).filter(docente.id_docente == id_teacher).first()
         respuesta = { "Id": db_teacher.id_docente, "nombre": db_teacher.nombre}
         db.delete(db_teacher)
         db.commit()

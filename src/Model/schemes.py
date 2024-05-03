@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 # ESTUDIANTES
 class studentBase(BaseModel):
-    id_estudiantes: int
+    id_estudiante: int
 
 
 class studentList(studentBase):

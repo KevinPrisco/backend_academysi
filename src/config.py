@@ -2,9 +2,9 @@
 # DB_CONNECT = "mysql://root:@localhost/academysibd"
 DB_DRIVER = "mysql"
 DB_USER = "root"
-DB_PASSWORD = ""
+# DB_PASSWORD = ""
+# DB_PORT: int | None = None
 DB_HOST = "localhost"
-DB_PORT: int
 DB_NAME = "academysibd"
 
 

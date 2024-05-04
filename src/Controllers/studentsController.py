@@ -5,7 +5,7 @@ from Model.Entities import estudiante
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 def getStudentById(db: Session, id_student: int):
     try:
-        result = db.query(estudiante).filter(estudiante.id_estudiantes == id_student).first()
+        result = db.query(estudiante).filter(estudiante.id_estudiante == id_student).first()
         print('hola:', result)
         if not result:
             raise NoResultFound('Usuario no encontrado')
@@ -47,7 +47,7 @@ def createStudent(db: Session, _student: schemes.studentCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def updateStudent(db: Session, _student: schemes.studentList):
     try:
-        result = db.query(estudiante).filter(estudiante.id_estudiantes == _student.id_estudiantes).first()
+        result = db.query(estudiante).filter(estudiante.id_estudiante == _student.id_estudiante).first()
         result.nombre = _student.nombre
         db.commit()
         db.refresh(result)
@@ -59,8 +59,8 @@ def updateStudent(db: Session, _student: schemes.studentList):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 def deleteStudent(db: Session, id_student: int):
     try:
-        db_student = db.query(estudiante).filter(estudiante.id_estudiantes == id_student).first()
-        respuesta = { "Id": db_student.id_estudiantes, "nombre": db_student.nombre}
+        db_student = db.query(estudiante).filter(estudiante.id_estudiante == id_student).first()
+        respuesta = { "Id": db_student.id_estudiante, "nombre": db_student.nombre}
         db.delete(db_student)
         db.commit()
         result = 'Estudiante borrado exitosamente: ', respuesta

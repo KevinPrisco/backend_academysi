@@ -37,7 +37,7 @@ class grupo(Base):
 class estudiante(Base):
     __tablename__ = "tb_estudiantes"
 
-    id_estudiantes = Column(Integer, primary_key=True, autoincrement= True)
+    id_estudiante = Column(Integer, primary_key=True, autoincrement= True)
     nombre = Column(String(150))
     apellido = Column(String(150))
     tipo_documento = Column(String(10))
@@ -62,7 +62,7 @@ class calificaciones(Base):
     id = Column(Integer, primary_key=True, autoincrement= True)
     calificacion = Column(Float)
     # RELACIONES
-    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
+    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiante"))
     rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_calificacion")
 
     asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
@@ -89,7 +89,7 @@ class asistencias(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     fecha = Column(String(50))
     # RELACIONES
-    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiantes"))
+    estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiante"))
     rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_asistencia")
 
     asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))

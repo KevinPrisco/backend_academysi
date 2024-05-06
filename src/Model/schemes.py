@@ -58,7 +58,6 @@ class adminCreate(BaseModel):
     nombre: str
 
 
-
 # USUARIOS
 class userBase(BaseModel):
     id: int

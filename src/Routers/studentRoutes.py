@@ -10,9 +10,9 @@ router  = APIRouter(
 
 
 @router.get("/getbyid/{id_student}", response_model= schemes.studentList)
-def get_student(id_student: int, db: Session = Depends(get_db)):
+async def get_student(id_student: int, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.getStudentById(db, id_student)
+        estudiantes = await studentsController.getStudentById(db, id_student)
         return estudiantes
     except NoResultFound as e:
         message = str(e)
@@ -24,9 +24,9 @@ def get_student(id_student: int, db: Session = Depends(get_db)):
     
 
 @router.get("/get", response_model=list[schemes.studentList])
-def get_students(db: Session =  Depends(get_db)):
+async def get_students(db: Session =  Depends(get_db)):
     try:
-        estudiantes = studentsController.getStudents(db)
+        estudiantes = await studentsController.getStudents(db)
         return estudiantes
     except BaseException as e:
         message = str(e)
@@ -38,9 +38,9 @@ def get_students(db: Session =  Depends(get_db)):
 
 
 @router.post("/create", response_model=schemes.studentCreate)
-def create_student(student: schemes.studentCreate, db: Session = Depends(get_db)):
+async def create_student(student: schemes.studentCreate, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.createStudent(db, _student = student)
+        estudiantes = await studentsController.createStudent(db, _student = student)
         return estudiantes
     except BaseException as e:
         message = str(e)
@@ -51,10 +51,10 @@ def create_student(student: schemes.studentCreate, db: Session = Depends(get_db)
         return JSONResponse(status_code=400, content=detail)
 
 
-@router.put("/update", response_model=schemes.studentList)
-def update_student(student: schemes.studentList, db: Session = Depends(get_db)):
+@router.put("/update")
+async def update_student(student: schemes.studentList, db: Session = Depends(get_db)):
     try:
-        estudiantes = studentsController.updateStudent(db, _student = student)
+        estudiantes = await studentsController.updateStudent(db, _student = student)
         return estudiantes
     
     except BaseException as e:

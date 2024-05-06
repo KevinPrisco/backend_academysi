@@ -3,61 +3,74 @@ from Model.Entities import estudiante
 
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
-def getStudentById(db: Session, id_student: int):
+async def getStudentById(db: Session, id_student: int):
     try:
-        result = db.query(estudiante).filter(estudiante.id_estudiante == id_student).first()
-        print('hola:', result)
-        if not result:
-            raise NoResultFound('Usuario no encontrado')
-        return result
+        async with db:
+            result = await db.execute(select(estudiante).where(estudiante.id_estudiante == id_student))
+            response = result.one_or_none()
+            response = response[0]
+            if not response:
+                raise NoResultFound('User not found')
+            
+            return response
     except:
         raise
 
 
 #LISTAR TODOS LOS ESTUDIANTES
-def getStudents(db: Session):
+async def getStudents(db: Session):
     try:
-        result = db.query(estudiante).all()
-        return result
+        async with db:
+            result = await db.execute(select(estudiante))
+            response = result.fetchall()
+            response = response[0]
+        return response
     except:
         raise
 
 
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
-def createStudent(db: Session, _student: schemes.studentCreate):
+async def createStudent(db: Session, _student: schemes.studentCreate):
     try:
-        result = estudiante(
-            nombre = _student.nombre,
-            apellido = _student.apellido,
-            tipo_documento = _student.tipo_documento,
-            documento = _student.documento,
-            Email = _student.Email,
-            carne = _student.carne,
-            telefono = _student.telefono,
-            grado = _student.grado
-            )
-        db.add(result)
-        db.commit()
-        db.refresh(result)
-        return result
-    except:
-        raise
+        async with db:
+            result = estudiante(
+                nombre = _student.nombre,
+                apellido = _student.apellido,
+                tipo_documento = _student.tipo_documento,
+                documento = _student.documento,
+                Email = _student.Email,
+                carne = _student.carne,
+                telefono = _student.telefono,
+                grado = _student.grado
+                )
+            db.add(result)
+            await db.commit()
+            return result
+        
+    except BaseException as e:
+        await db.rollback()
+        raise e
 
 
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
-def updateStudent(db: Session, _student: schemes.studentList):
+async def updateStudent(db: Session, _student: schemes.studentList):
     try:
-        result = db.query(estudiante).filter(estudiante.id_estudiante == _student.id_estudiante).first()
-        result.nombre = _student.nombre
-        db.commit()
-        db.refresh(result)
-        return result
+        async with db.begin():
+            result = await db.execute(select(estudiante).where(estudiante.id_estudiante == _student.id_estudiante))
+            # result.nombre = _student.nombre
+            # db.commit()
+            # db.refresh(result)
+            result = result.one_or_none()
+            result = result[0]
+            print(_student.id_estudiante)
+            return result
     except:
+        await db.rollback()
         raise
 
 
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
-def deleteStudent(db: Session, id_student: int):
+async def deleteStudent(db: Session, id_student: int):
     try:
         db_student = db.query(estudiante).filter(estudiante.id_estudiante == id_student).first()
         respuesta = { "Id": db_student.id_estudiante, "nombre": db_student.nombre}

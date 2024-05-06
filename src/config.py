@@ -1,9 +1,9 @@
 # "BDtype://user:password@dblocation/Dbname"
 # DB_CONNECT = "mysql://root:@localhost/academysibd"
-DB_DRIVER = "mysql"
+DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
-# DB_PASSWORD = ""
-# DB_PORT: int | None = None
+DB_PASSWORD = ""
+DB_PORT: int | None = None
 DB_HOST = "localhost"
 DB_NAME = "academysibd"
 

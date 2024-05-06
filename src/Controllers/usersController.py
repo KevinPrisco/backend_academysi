@@ -4,18 +4,23 @@ from Services import Auth
 
 
 #LISTAR UN REGISTRO POR ID
-def getUserCredentials(db: Session, username: str):
+async def getUserCredentials(db: Session, username: str):
     try:
-        result = db.query(usuario).filter(usuario.username == username).first()
-        if not result:
-            raise NoResultFound('User not found')
-        return result
+        async with db:
+            # result = await db.execute(usuario).filter(usuario.username == username).first()
+            result = await db.execute(select(usuario).where(usuario.username == username))
+            response = result.all()
+
+            if not response:
+                raise NoResultFound('Estudiante not found')
+            
+            return response[0][0]
     except:
         raise
 
 
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
-def createUser(db: Session, _user: schemes.userBase):
+async def createUser(db: Session, _user: schemes.userBase):
     try:
         hash = Auth.hash_pass(_user.password)
         result = usuario(

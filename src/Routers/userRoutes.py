@@ -15,10 +15,10 @@ router  = APIRouter(
 )
 
 @router.post("/Login")
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session= Depends(get_db)) -> schemes.JWToken:
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session= Depends(get_db)) -> schemes.JWToken:
     try:
         #Busca Si el usuario existe
-        usuario = usersController.getUserCredentials(db, form_data.username)
+        usuario = await usersController.getUserCredentials(db, form_data.username)
         #Verifica si la clave ingresada es igual a la clave almacenada en BD
         hashkey = Auth.verify_hash_pass(form_data.password, usuario.password)
 
@@ -30,7 +30,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_HOURS)
         access_token = Auth.create_access_token(
             data={
-                "id:": usuario.id ,
+                "id:": usuario.id,
                 "sub": usuario.username,
                 "scope": usuario.permisos
                 }, 
@@ -51,9 +51,9 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
 
 
 @router.post("/create", response_model=schemes.userBase)
-def create_users(user: schemes.userBase, db: Session = Depends(get_db)):
+async def create_users(user: schemes.userBase, db: Session = Depends(get_db)):
     try:
-        usuario = usersController.createUser(db, _user = user)
+        usuario = await usersController.createUser(db, _user = user)
         return usuario
     except BaseException as e:
         message = str(e)

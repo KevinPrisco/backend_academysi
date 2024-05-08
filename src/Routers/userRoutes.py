@@ -51,7 +51,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: 
 
 
 @router.post("/create", response_model=schemes.userBase)
-async def create_users(user: schemes.userBase, db: Session = Depends(get_db)):
+async def create_users(user: schemes.userCreate, db: Session = Depends(get_db)):
     try:
         usuario = await usersController.createUser(db, _user = user)
         return usuario

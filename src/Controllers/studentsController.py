@@ -6,13 +6,10 @@ from Model.Entities import estudiante
 async def getStudentById(db: Session, id_student: int):
     try:
         async with db:
-            result = await db.execute(select(estudiante).where(estudiante.id_estudiante == id_student))
-            response = result.one_or_none()
-            response = response[0]
-            if not response:
+            result = await db.get(estudiante, id_student)
+            if not result:
                 raise NoResultFound('User not found')
-            
-            return response
+            return result
     except:
         raise
 
@@ -45,6 +42,7 @@ async def createStudent(db: Session, _student: schemes.studentCreate):
                 )
             db.add(result)
             await db.commit()
+            await db.refresh(result)
             return result
         
     except BaseException as e:
@@ -55,14 +53,11 @@ async def createStudent(db: Session, _student: schemes.studentCreate):
 #ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
 async def updateStudent(db: Session, _student: schemes.studentList):
     try:
-        async with db.begin():
-            result = await db.execute(select(estudiante).where(estudiante.id_estudiante == _student.id_estudiante))
-            # result.nombre = _student.nombre
-            # db.commit()
-            # db.refresh(result)
-            result = result.one_or_none()
-            result = result[0]
-            print(_student.id_estudiante)
+        async with db:
+            result = await db.get(estudiante, _student.id_estudiante)
+            result = asignar_valores(result, _student)
+            await db.commit()
+            await db.refresh(result)
             return result
     except:
         await db.rollback()
@@ -72,11 +67,13 @@ async def updateStudent(db: Session, _student: schemes.studentList):
 #ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
 async def deleteStudent(db: Session, id_student: int):
     try:
-        db_student = db.query(estudiante).filter(estudiante.id_estudiante == id_student).first()
-        respuesta = { "Id": db_student.id_estudiante, "nombre": db_student.nombre}
-        db.delete(db_student)
-        db.commit()
-        result = 'Estudiante borrado exitosamente: ', respuesta
-        return result
+        async with db:
+            db_student = await db.get(estudiante, id_student)
+            respuesta = { "Id": db_student.id_estudiante, "nombre": db_student.nombre}
+            await db.delete(db_student)
+            await db.commit()
+            result = 'Estudiante borrado exitosamente: ', respuesta
+            return result
     except:
+        await db.rollback()
         raise

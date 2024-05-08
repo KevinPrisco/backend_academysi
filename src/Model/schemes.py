@@ -66,6 +66,13 @@ class userBase(BaseModel):
     permisos: str
 
 
+
+class userCreate(BaseModel):
+    username: str
+    password: str
+    permisos: str
+
+
 # JWT
 class JWToken(BaseModel):
     access_token: str

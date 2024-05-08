@@ -7,10 +7,8 @@ from Services import Auth
 async def getUserCredentials(db: Session, username: str):
     try:
         async with db:
-            # result = await db.execute(usuario).filter(usuario.username == username).first()
             result = await db.execute(select(usuario).where(usuario.username == username))
             response = result.all()
-
             if not response:
                 raise NoResultFound('Estudiante not found')
             
@@ -20,17 +18,19 @@ async def getUserCredentials(db: Session, username: str):
 
 
 #CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
-async def createUser(db: Session, _user: schemes.userBase):
+async def createUser(db: Session, _user: schemes.userCreate):
     try:
-        hash = Auth.hash_pass(_user.password)
-        result = usuario(
-            username = _user.username, 
-            password = hash,
-            permisos = _user.permisos
-            )
-        db.add(result)
-        db.commit()
-        db.refresh(result)
-        return result
+        async with db:
+            hash = Auth.hash_pass(_user.password)
+            result = usuario(
+                username = _user.username, 
+                password = hash,
+                permisos = _user.permisos
+                )
+            db.add(result)
+            await db.commit()
+            await db.refresh(result)
+            return result
     except:
+        await db.rollback()
         raise

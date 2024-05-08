@@ -51,7 +51,7 @@ async def create_student(student: schemes.studentCreate, db: Session = Depends(g
         return JSONResponse(status_code=400, content=detail)
 
 
-@router.put("/update")
+@router.put("/update", response_model=schemes.studentList)
 async def update_student(student: schemes.studentList, db: Session = Depends(get_db)):
     try:
         estudiantes = await studentsController.updateStudent(db, _student = student)
@@ -67,9 +67,9 @@ async def update_student(student: schemes.studentList, db: Session = Depends(get
 
 
 @router.delete("/delete/{id_student}")
-def delete_student(id_student: int,db: Session = Depends(get_db)):
+async def delete_student(id_student: int,db: Session = Depends(get_db)):
     try: 
-        estudiantes = studentsController.deleteStudent(db, id_student)
+        estudiantes = await studentsController.deleteStudent(db, id_student)
         return estudiantes
     
     except BaseException as e:

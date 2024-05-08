@@ -8,11 +8,11 @@ async def getUserCredentials(db: Session, username: str):
     try:
         async with db:
             result = await db.execute(select(usuario).where(usuario.username == username))
-            response = result.all()
+            response = result.one_or_none()
             if not response:
                 raise NoResultFound('Estudiante not found')
-            
-            return response[0][0]
+            response = response[0] 
+            return response
     except:
         raise
 

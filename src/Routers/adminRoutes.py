@@ -10,9 +10,9 @@ router  = APIRouter(
 
 
 @router.get("/getbyid/{id_admin}", response_model= schemes.adminList)
-def get_admin(id_admin: int, db: Session = Depends(get_db)):
+async def get_admin(id_admin: int, db: Session = Depends(get_db)):
     try:
-        admin = adminsController.getAdminById(db, id_admin)
+        admin = await adminsController.getAdminById(db, id_admin)
         return admin
     except NoResultFound as e:
         message = str(e)
@@ -24,9 +24,9 @@ def get_admin(id_admin: int, db: Session = Depends(get_db)):
     
 
 @router.get("/get", response_model=list[schemes.adminList])
-def get_admin(db: Session =  Depends(get_db)):
+async def get_admin(db: Session =  Depends(get_db)):
     try:
-        admin = adminsController.getAdmins(db)
+        admin = await adminsController.getAdmins(db)
         return admin
     except BaseException as e:
         message = str(e)
@@ -38,9 +38,9 @@ def get_admin(db: Session =  Depends(get_db)):
 
 
 @router.post("/create", response_model=schemes.adminList)
-def create_admin(admin: schemes.adminCreate, db: Session = Depends(get_db)):
+async def create_admin(admin: schemes.adminCreate, db: Session = Depends(get_db)):
     try:
-        admin = adminsController.createAdmin(db, _admin = admin)
+        admin = await adminsController.createAdmin(db, _admin = admin)
         return admin
     except BaseException as e:
         message = str(e)
@@ -52,9 +52,9 @@ def create_admin(admin: schemes.adminCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/update", response_model=schemes.adminList)
-def update_admin(admin: schemes.adminList, db: Session = Depends(get_db)):
+async def update_admin(admin: schemes.adminList, db: Session = Depends(get_db)):
     try:
-        admin = adminsController.updateAdmin(db, _admin = admin)
+        admin = await adminsController.updateAdmin(db, _admin = admin)
         return admin
     
     except BaseException as e:
@@ -67,9 +67,9 @@ def update_admin(admin: schemes.adminList, db: Session = Depends(get_db)):
 
 
 @router.delete("/delete/{id_admin}")
-def delete_admin(id_admin: int,db: Session = Depends(get_db)):
+async def delete_admin(id_admin: int,db: Session = Depends(get_db)):
     try: 
-        admin = adminsController.deleteAdmin(db, id_admin)
+        admin = await adminsController.deleteAdmin(db, id_admin)
         return admin
     
     except BaseException as e:

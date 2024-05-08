@@ -1,14 +1,13 @@
 from Controllers.Commons import *
 from Model.Entities import estudiante
 
-
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 async def getStudentById(db: Session, id_student: int):
     try:
         async with db:
             result = await db.get(estudiante, id_student)
             if not result:
-                raise NoResultFound('User not found')
+                raise NoResultFound('Estudiante not found')
             return result
     except:
         raise
@@ -20,8 +19,8 @@ async def getStudents(db: Session):
         async with db:
             result = await db.execute(select(estudiante))
             response = result.fetchall()
-            response = response[0]
-        return response
+            response = getAllEntities(response)
+            return response
     except:
         raise
 

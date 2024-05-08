@@ -10,9 +10,9 @@ router  = APIRouter(
 
 
 @router.get("/getbyid/{id_teacher}", response_model= schemes.teacherList)
-def get_teacher(id_teacher: int, db: Session = Depends(get_db)):
+async def get_teacher(id_teacher: int, db: Session = Depends(get_db)):
     try:
-        docente = teachersController.getTeacherById(db, id_teacher)
+        docente = await teachersController.getTeacherById(db, id_teacher)
         return docente
     except NoResultFound as e:
         message = str(e)
@@ -24,9 +24,9 @@ def get_teacher(id_teacher: int, db: Session = Depends(get_db)):
     
 
 @router.get("/get", response_model=list[schemes.teacherList])
-def get_teachers(db: Session =  Depends(get_db)):
+async def get_teachers(db: Session =  Depends(get_db)):
     try:
-        docentes = teachersController.getTeachers(db)
+        docentes = await teachersController.getTeachers(db)
         return docentes
     except BaseException as e:
         message = str(e)
@@ -38,9 +38,9 @@ def get_teachers(db: Session =  Depends(get_db)):
 
 
 @router.post("/create", response_model=schemes.teacherList)
-def create_teacher(teacher: schemes.teacherCreate, db: Session = Depends(get_db)):
+async def create_teacher(teacher: schemes.teacherCreate, db: Session = Depends(get_db)):
     try:
-        docente = teachersController.createTeacher(db, _teacher = teacher)
+        docente = await teachersController.createTeacher(db, _teacher = teacher)
         return docente
     except BaseException as e:
         message = str(e)
@@ -52,9 +52,9 @@ def create_teacher(teacher: schemes.teacherCreate, db: Session = Depends(get_db)
 
 
 @router.put("/update", response_model=schemes.teacherList)
-def update_teacher(teacher: schemes.teacherList, db: Session = Depends(get_db)):
+async def update_teacher(teacher: schemes.teacherList, db: Session = Depends(get_db)):
     try:
-        docente = teachersController.updateTeacher(db, _teacher = teacher)
+        docente = await teachersController.updateTeacher(db, _teacher = teacher)
         return docente
     
     except BaseException as e:
@@ -67,9 +67,9 @@ def update_teacher(teacher: schemes.teacherList, db: Session = Depends(get_db)):
 
 
 @router.delete("/delete/{id_teacher}")
-def delete_teacher(id_teacher: int,db: Session = Depends(get_db)):
+async def delete_teacher(id_teacher: int,db: Session = Depends(get_db)):
     try: 
-        docente = teachersController.deleteTeacher(db, id_teacher)
+        docente = await teachersController.deleteTeacher(db, id_teacher)
         return docente
     
     except BaseException as e:

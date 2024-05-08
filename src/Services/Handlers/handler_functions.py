@@ -19,3 +19,8 @@ def asignar_valores(entidad_destino, entidad_origen):
     return entidad_destino
 
 
+def getAllEntities(response):
+    lista = []
+    for tupla in response:
+        lista.append(tupla[0])
+    return lista

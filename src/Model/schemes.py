@@ -35,13 +35,25 @@ class teacherBase(BaseModel):
 
 
 class teacherList(teacherBase):
-    nombre: str
+    nombres: str
     apellidos: str
+    tipo_documento: str
+    documento: str
+    email: str
+    carne: str
+    telefono: str
+    Area: str
 
 
 class teacherCreate(BaseModel):
-    nombre: str
+    nombres: str
     apellidos: str
+    tipo_documento: str
+    documento: str
+    email: str
+    carne: str
+    telefono: str
+    Area: str
 
 
 
@@ -51,11 +63,25 @@ class adminBase(BaseModel):
 
 
 class adminList(adminBase):
-    nombre: str
+    nombres: str
+    apellidos: str
+    tipo_documento: str
+    documento: str
+    email: str
+    carne: str
+    telefono: str
+    Rol: str
 
 
 class adminCreate(BaseModel):
-    nombre: str
+    nombres: str
+    apellidos: str
+    tipo_documento: str
+    documento: str
+    email: str
+    carne: str
+    telefono: str
+    Rol: str
 
 
 
@@ -78,4 +104,11 @@ class userCreate(BaseModel):
 class JWToken(BaseModel):
     access_token: str
     token_type: str
+
+
+
+#Asignatura
+
+class subjectBase(BaseModel):
+    id_asignatura: int
 

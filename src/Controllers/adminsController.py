@@ -27,7 +27,14 @@ async def createAdmin(db: Session, _admin: schemes.adminCreate):
     try:
         async with db:
             result = administrador(
-                nombre = _admin.nombre,
+                nombres = _admin.nombres,
+                apellidos = _admin.apellidos,
+                tipo_documento = _admin.tipo_documento,
+                documento = _admin.documento,
+                email = _admin.email,
+                carne = _admin.carne,
+                telefono = _admin.telefono,
+                Rol = _admin.Rol
                 )
             db.add(result)
             await db.commit()

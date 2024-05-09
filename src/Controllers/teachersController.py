@@ -19,6 +19,7 @@ async def getTeachers(db: Session):
         async with db:
             result = await db.execute(select(docente))
             response = result.fetchall()
+            print(response)
             response = getAllEntities(response)
             return response
     except:
@@ -30,8 +31,14 @@ async def createTeacher(db: Session, _teacher: schemes.teacherCreate):
     try:
         async with db:
             result = docente(
-                nombre = _teacher.nombre,
+                nombres = _teacher.nombres,
                 apellidos = _teacher.apellidos,
+                tipo_documento = _teacher.tipo_documento,
+                documento = _teacher.documento,
+                email = _teacher.email,
+                carne = _teacher.carne,
+                telefono = _teacher.telefono,
+                Area = _teacher.Area
                 )
             db.add(result)
             await db.commit()

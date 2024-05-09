@@ -18,7 +18,14 @@ class administrador(Base):
     __tablename__ = "tb_administrador"
 
     id_administrador = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(150))
+    nombres = Column(String(150))
+    apellidos = Column(String(150))
+    tipo_documento = Column(String(10))
+    documento = Column(String(20))
+    email = Column(String(150))
+    carne = Column(String(20))
+    telefono = Column(String(100))
+    Rol = Column(String(10))
 
 
 # GRUPOS
@@ -38,11 +45,11 @@ class estudiante(Base):
     __tablename__ = "tb_estudiantes"
 
     id_estudiante = Column(Integer, primary_key=True, autoincrement= True)
-    nombre = Column(String(150))
-    apellido = Column(String(150))
+    nombres = Column(String(150))
+    apellidos = Column(String(150))
     tipo_documento = Column(String(10))
     documento = Column(String(20))
-    Email = Column(String(150))
+    email = Column(String(150))
     carne = Column(String(20))
     telefono = Column(String(100))
     grado = Column(String(10))
@@ -120,8 +127,14 @@ class docente(Base):
     __tablename__ = "tb_docentes"
 
     id_docente = Column(Integer, primary_key=True, autoincrement= True)
-    nombre = Column(String(150))
+    nombres = Column(String(150))
     apellidos = Column(String(150))
+    tipo_documento = Column(String(150))
+    documento = Column(String(20))
+    email = Column(String(150))
+    carne = Column(String(20))
+    telefono = Column(String(100))
+    Area = Column(String(10))
 
     # RELACIONES
     rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_docente")

@@ -7,7 +7,7 @@ async def getSubjectById(db: Session, id_student: int):
     async with db:
         try:
             result = await db.execute(
-                select(grupo.descripcion, asignatura.nombre, docente.nombre, docente.apellidos)
+                select(grupo.descripcion, asignatura.nombre, docente.nombres, docente.apellidos)
                 .select_from(estudiante)
                 .join(grupo, grupo.id_grupo == estudiante.grupo_id)
                 .join(gestion_asignatura, gestion_asignatura.grupo_id == grupo.id_grupo)

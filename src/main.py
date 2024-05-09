@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from Routers import *
+from Routes import *
 import uvicorn
 
 
 app = FastAPI()
-app.include_router(userRoutes.router)
-app.include_router(studentRoutes.router)
+app.include_router(userRoute.router)
+app.include_router(studentRoute.router)
 app.include_router(teacherRoute.router)
-app.include_router(adminRoutes.router)
+app.include_router(adminRoute.router)
 app.include_router(subjectRoute.router)
 
 

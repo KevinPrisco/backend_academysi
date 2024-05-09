@@ -1,15 +1,15 @@
 from Controllers import usersController
-from Routers.commons import *
+from Routes.commons import *
 from datetime import timedelta
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import HTTPException
-from Services import Auth
+from src.Services.Auth import Auth
 from config import ACCESS_TOKEN_EXPIRE_HOURS
 
 
 router  = APIRouter(
-    prefix='/Users',    
+    prefix='/usuario',    
     tags=["Usuarios"],
     dependencies=[]
 )

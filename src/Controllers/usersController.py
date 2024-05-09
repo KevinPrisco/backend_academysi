@@ -1,6 +1,6 @@
 from Controllers.Commons import *
 from Model.Entities import usuario
-from Services import Auth
+from Services.Auth import Auth
 
 
 #LISTAR UN REGISTRO POR ID

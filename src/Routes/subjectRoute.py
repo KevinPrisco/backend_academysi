@@ -1,9 +1,9 @@
 from Controllers import subjectsController
-from Routers.commons import *
+from Routes.commons import *
 
 
 router  = APIRouter(
-    prefix='/subject',    
+    prefix='/asignatura',    
     tags=["Asignatura"],
     # dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )

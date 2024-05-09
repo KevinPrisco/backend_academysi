@@ -1,5 +1,5 @@
 from Controllers import adminsController
-from Routers.commons import *
+from Routes.commons import *
 
 
 router  = APIRouter(

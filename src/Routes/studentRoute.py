@@ -1,9 +1,9 @@
 from Controllers import studentsController
-from Routers.commons import *
+from Routes.commons import *
 
 
 router  = APIRouter(
-    prefix='/student',    
+    prefix='/estudiante',    
     tags=["Estudiantes"],
     dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )

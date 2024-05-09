@@ -7,7 +7,7 @@ from config import SECRET_KEY, ALGORITHM
 
 
 #instancias de OAUTH2 Y passlib
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/Users/Login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/usuario/Login')
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 

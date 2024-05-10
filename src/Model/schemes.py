@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from fastapi_pagination import Page
 
 
 # ESTUDIANTES
@@ -7,26 +8,32 @@ class studentBase(BaseModel):
 
 
 class studentList(studentBase):
-    nombre: str
-    apellido: str
+    nombres: str
+    apellidos: str
     tipo_documento: str
     documento: str
-    Email: str
+    email: str
     carne: str
     telefono: str
     grado: str
 
 
 class studentCreate(BaseModel):
-    nombre: str
-    apellido: str
+    nombres: str
+    apellidos: str
     tipo_documento: str
     documento: str
-    Email: str
+    email: str
     carne: str
     telefono: str
     grado: str
 
+class studentPagination(Page):
+    items: list[studentList]
+    total: int
+    page: int
+    size: int
+    pages: int
 
 
 # PROFESORES

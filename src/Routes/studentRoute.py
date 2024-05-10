@@ -5,11 +5,11 @@ from Routes.commons import *
 router  = APIRouter(
     prefix='/estudiante',    
     tags=["Estudiantes"],
-    dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
+    # dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )
 
 
-@router.get("/getbyid/{id_student}", response_model= schemes.studentList)
+@router.get("/getbyid/{id_student}", response_model=schemes.studentList)
 async def get_student(id_student: int, db: Session = Depends(get_db)):
     try:
         estudiantes = await studentsController.getStudentById(db, id_student)
@@ -23,11 +23,11 @@ async def get_student(id_student: int, db: Session = Depends(get_db)):
         return JSONResponse(status_code=404, content=detail)
     
 
-@router.get("/get", response_model=list[schemes.studentList])
+@router.get("/get", response_model=schemes.studentPagination)
 async def get_students(db: Session =  Depends(get_db)):
     try:
         estudiantes = await studentsController.getStudents(db)
-        return estudiantes
+        return paginate(estudiantes)
     except BaseException as e:
         message = str(e)
         detail = {

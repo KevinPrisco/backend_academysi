@@ -1,7 +1,7 @@
 from Controllers.Commons import *
 from Model.Entities import grupo
 
-#LISTAR UN REGISTRO DE ESTUDIANTES POR ID
+#LISTAR UN REGISTRO DE GRUPOS POR ID
 async def getGroupById(db: Session, id_group: int):
     try:
         async with db:
@@ -13,7 +13,7 @@ async def getGroupById(db: Session, id_group: int):
         raise
 
 
-#LISTAR TODOS LOS ESTUDIANTES
+#LISTAR TODOS LOS GRUPOS
 async def getGroups(db: Session):
     try:
         async with db:
@@ -25,7 +25,7 @@ async def getGroups(db: Session):
         raise
 
 
-#CREAR UN REGISTRO NUEVO EN LA TABLA ESTUDIANTES
+#CREAR UN REGISTRO NUEVO EN LA TABLA GRUPOS
 async def createGroup(db: Session, _group: schemes.groupCreate):
     try:
         async with db:
@@ -42,7 +42,7 @@ async def createGroup(db: Session, _group: schemes.groupCreate):
         raise e
 
 
-#ACTUALIZAR UN REGISTRO EN LA TABLA ESTUDIANTES
+#ACTUALIZAR UN REGISTRO EN LA TABLA GRUPOS
 async def updateGroup(db: Session, _group: schemes.groupList):
     try:
         async with db:
@@ -56,7 +56,7 @@ async def updateGroup(db: Session, _group: schemes.groupList):
         raise
 
 
-#ELIMINAR UN REGISTRO EN LA TABLA ESTUDIANTES
+#ELIMINAR UN REGISTRO EN LA TABLA GRUPOS
 async def deleteGroup(db: Session, id_group: int):
     try:
         async with db:

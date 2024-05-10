@@ -24,3 +24,6 @@ def getAllEntities(response):
     for tupla in response:
         lista.append(tupla[0])
     return lista
+
+def getOneEntity(response):
+    pass

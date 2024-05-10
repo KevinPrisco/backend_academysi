@@ -19,7 +19,6 @@ async def getTeachers(db: Session):
         async with db:
             result = await db.execute(select(docente))
             response = result.fetchall()
-            print(response)
             response = getAllEntities(response)
             return response
     except:

@@ -108,7 +108,29 @@ class JWToken(BaseModel):
 
 
 #Asignatura
-
 class subjectBase(BaseModel):
     id_asignatura: int
 
+
+class subjectList(subjectBase):
+    descripcion: str
+
+
+class subjectCreate(BaseModel):
+    descripcion: str
+
+
+
+
+# GRUPOS
+
+class groupBase(BaseModel):
+    id_grupo: int
+
+
+class groupList(groupBase):
+    descripcion: str
+
+
+class groupCreate(BaseModel):
+    descripcion: str

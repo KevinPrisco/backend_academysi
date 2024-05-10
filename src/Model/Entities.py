@@ -1,5 +1,5 @@
 from typing import List
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, Table
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Table
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from Database.AsynConnect import Base
 
@@ -58,12 +58,12 @@ class estudiante(Base):
     grupo_id: Mapped[int] = mapped_column(ForeignKey("tb_grupos.id_grupo"), nullable=True )
     rl_grupo: Mapped["grupo"] = relationship(back_populates="rl_estudiante")
 
-    rl_calificacion: Mapped[list["calificaciones"]] = relationship(back_populates="rl_estudiante")
-    rl_asistencia: Mapped[list["asistencias"]] = relationship(back_populates="rl_estudiante")
+    rl_calificacion: Mapped[list["calificacion"]] = relationship(back_populates="rl_estudiante")
+    rl_asistencia: Mapped[list["asistencia"]] = relationship(back_populates="rl_estudiante")
 
 
 # CALIFICACIONES
-class calificaciones(Base):
+class calificacion(Base):
     __tablename__ = "tb_calificaciones"
 
     id = Column(Integer, primary_key=True, autoincrement= True)
@@ -81,16 +81,16 @@ class asignatura(Base):
     __tablename__ = "tb_asignaturas"
 
     id_asignatura = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(100))
+    descripcion = Column(String(150))
     # RELACIONES
-    rl_calificacion: Mapped[list["calificaciones"]] = relationship(back_populates="rl_asignatura")
-    rl_asistencia: Mapped[list["asistencias"]] = relationship(back_populates="rl_asignatura")
+    rl_calificacion: Mapped[list["calificacion"]] = relationship(back_populates="rl_asignatura")
+    rl_asistencia: Mapped[list["asistencia"]] = relationship(back_populates="rl_asignatura")
 
     rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_asignatura")
 
 
 # ASISTENCIAS
-class asistencias(Base):
+class asistencia(Base):
     __tablename__ = "tb_asistencias"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -117,7 +117,7 @@ class gestion_asignatura(Base):
     docente_id: Mapped[int] = mapped_column(ForeignKey("tb_docentes.id_docente"))
     rl_docente: Mapped["docente"] = relationship(back_populates="rl_gestion")
 
-    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"))
+    asignatura_id: Mapped[int] = mapped_column(ForeignKey("tb_asignaturas.id_asignatura"), nullable=True)
     rl_asignatura: Mapped["asignatura"] = relationship(back_populates="rl_gestion")
 
 

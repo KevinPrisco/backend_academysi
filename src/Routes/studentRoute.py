@@ -5,7 +5,7 @@ from Routes.commons import *
 router  = APIRouter(
     prefix='/estudiante',    
     tags=["Estudiantes"],
-    # dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
+    dependencies=[Depends(get_current_user), Depends(get_token_scopes)]
 )
 
 

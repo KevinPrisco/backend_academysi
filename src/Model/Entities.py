@@ -2,6 +2,7 @@ from typing import List
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Table
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from Database.AsynConnect import Base
+from sqlalchemy.dialects.mysql import JSON 
 
 # USUARIOS
 class usuario(Base):
@@ -28,6 +29,7 @@ class administrador(Base):
     Rol = Column(String(10))
 
 
+
 # GRUPOS
 class grupo(Base):
     __tablename__ = "tb_grupos"
@@ -35,8 +37,10 @@ class grupo(Base):
     id_grupo = Column(Integer, primary_key=True, autoincrement=True)
     descripcion = Column(String(150))
     # RELACIONES
+    periodo_id: Mapped[int] = mapped_column(ForeignKey("tb_periodos.id_periodo"))
+    rl_periodo: Mapped["periodo"] = relationship(back_populates="rl_grupo")
+    
     rl_estudiante: Mapped[list["estudiante"]] = relationship(back_populates="rl_grupo")
-
     rl_gestion: Mapped[list["gestion_asignatura"]] = relationship(back_populates="rl_grupo")
 
 
@@ -146,6 +150,7 @@ class horario(Base):
     __tablename__ = "tb_horarios"
 
     id_horario = Column(Integer, primary_key=True, autoincrement=True)
+    configuracion = Column(JSON)
 
     # RELACIONES
     gestion_id: Mapped[int] = mapped_column(ForeignKey("tb_gestion_asignatura.id_gestion"))
@@ -153,8 +158,8 @@ class horario(Base):
 
 
 
-# ASOSIACION
-asociacion = Table(
+# ASOSIACION MUCHOS A MUCHOS GRADO ESCOLAR -- AÑO ACADEMICO
+asoc_año_grado = Table(
     "asociacion_año_grado",
     Base.metadata,
     Column("año_academico_id", ForeignKey("tb_año_academico.id_añoAcademico"), primary_key=True),
@@ -180,10 +185,10 @@ class grado_escolar(Base):
 
 
 grados_escolares: Mapped[List[grado_escolar]] = relationship(
-    secondary=asociacion, back_populates='años_academicos'
+    secondary=asoc_año_grado, back_populates='años_academicos'
 )
 años_academicos: Mapped[List[año_academico]] = relationship(
-   secondary=asociacion, back_populates='grados_escolares'
+   secondary=asoc_año_grado, back_populates='grados_escolares'
 )
 
 
@@ -194,3 +199,21 @@ class periodo(Base):
 
     id_periodo = Column(Integer, primary_key=True, autoincrement=True)
     descripcion = Column(String(150))
+    rl_grupo: Mapped[list["grupo"]] = relationship(back_populates="rl_periodo")
+
+
+# ASOSIACION MUCHOS A MUCHOS GRADO ESCOLAR -- PERIODOS
+asoc_grado_periodo = Table(
+    "asociacion_grado_periodo",
+    Base.metadata,
+    Column("grado_escolar_id", ForeignKey("tb_grado_escolar.id_gradoEscolar"), primary_key=True),
+    Column("periodo_id", ForeignKey("tb_periodos.id_periodo"), primary_key=True)
+)
+
+
+grados_escolares: Mapped[List[grado_escolar]] = relationship(
+    secondary=asoc_grado_periodo, back_populates='periodos'
+)
+periodos: Mapped[List[periodo]] = relationship(
+   secondary=asoc_grado_periodo, back_populates='grados_escolares'
+)

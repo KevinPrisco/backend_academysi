@@ -29,11 +29,11 @@ class studentCreate(BaseModel):
     grado: str
 
 class studentPagination(Page):
-    items: list[studentList]
     total: int
     page: int
     size: int
     pages: int
+    items: list[studentList]
 
 
 # PROFESORES

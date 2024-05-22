@@ -1,5 +1,5 @@
-from Controllers.Commons import *
-from Model.Entities import grupo
+from ..Controllers.Commons import *
+from ..Model.Entities import grupo
 
 #LISTAR UN REGISTRO DE GRUPOS POR ID
 async def getGroupById(db: Session, id_group: int):

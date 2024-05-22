@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
-from Routes import *
+from .Routes import *
 import uvicorn
 from fastapi_pagination.utils import disable_installed_extensions_check
 
@@ -28,5 +28,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-if __name__ == "__main__":
-    uvicorn.run(app, port=8001)
+# if __name__ == "__main__":
+#     uvicorn.run(app, port=8001)

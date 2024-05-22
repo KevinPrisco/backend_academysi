@@ -1,11 +1,11 @@
-from Controllers import usersController
-from Routes.commons import *
+from ..Controllers import usersController
+from .commons import *
 from datetime import timedelta
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import HTTPException
-from Services.Auth import Auth
-from config import ACCESS_TOKEN_EXPIRE_HOURS
+from ..Services.Auth import Auth
+from ..config import ACCESS_TOKEN_EXPIRE_HOURS
 
 
 router  = APIRouter(

@@ -1,5 +1,5 @@
 from .Commons import *
-from Model.Entities import asignatura, estudiante, grupo, docente, gestion_asignatura
+from ..Model.Entities import asignatura, estudiante, grupo, docente, gestion_asignatura
 
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID

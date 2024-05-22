@@ -1,5 +1,14 @@
-# "BDtype://user:password@dblocation/Dbname"
-# DB_CONNECT = "mysql://root:@localhost/academysibd"
+"""
+
+Aqui estan las Variables de entorno
+
+normalmente NO se suben y son un archivo .env 
+pero para este caso y para ser men
+
+
+"""
+
+#Variables de conexion con la base de datos
 DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
 DB_PASSWORD = ""

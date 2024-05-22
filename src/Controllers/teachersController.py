@@ -1,5 +1,5 @@
-from Controllers.Commons import *
-from Model.Entities import docente
+from ..Controllers.Commons import *
+from ..Model.Entities import docente
 
 #LISTAR UN REGISTRO DE ESTUDIANTES POR ID
 async def getTeacherById(db: Session, id_teacher: int):

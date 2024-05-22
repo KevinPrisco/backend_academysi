@@ -1,7 +1,7 @@
 from sqlalchemy import  URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from config import DB_DRIVER, DB_USER, DB_PASSWORD, DB_PORT, DB_HOST, DB_NAME
+from ..config import DB_DRIVER, DB_USER, DB_PASSWORD, DB_PORT, DB_HOST, DB_NAME
 
 
 SQLALCHEMY_DATABASE_URL = URL.create( 

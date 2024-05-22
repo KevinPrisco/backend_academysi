@@ -1,5 +1,5 @@
-from Controllers.Commons import *
-from Model.Entities import estudiante
+from ..Controllers.Commons import *
+from ..Model.Entities import estudiante
 
 
 

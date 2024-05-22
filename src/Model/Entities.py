@@ -1,7 +1,8 @@
 from typing import List
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Table
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from Database.AsynConnect import Base
+from ..Database.AsynConnect import Base
+from sqlalchemy.dialects.mysql import JSON 
 
 # USUARIOS
 class usuario(Base):

@@ -13,18 +13,6 @@ def generar_reporte(notas):
     # Ordenamos las materias alfabéticamente
     materias = sorted(materias_notas.keys())
 
-
-    # data = [["Materia"] + [f"Nota {i+1}" for i in range(len(max(materias_notas.values(), key=len)) * 2)]]
-    # for materia in materias:
-    #     fila = [materia]  # Inicializamos la fila con el nombre de la materia
-    #     notas_materia = [nota for nota in notas if nota["Materia"] == materia]  # Obtener las notas de la materia actual
-    #     for nota in notas_materia:
-    #         fila.append(nota["Nota"])  # Agregar la nota a la fila
-    #         fila.append(f"{nota['Porcentaje']}%")  # Agregar el porcentaje de la nota a la fila
-    #     # Rellenar con espacios en blanco si la materia tiene menos notas que el máximo
-    #     fila += [''] * (len(data[0]) - len(fila))
-    #     data.append(fila)
-
     # Encontrar la cantidad máxima de notas
     max_notas = len(max(materias_notas.values(), key=len))
 
@@ -39,12 +27,11 @@ def generar_reporte(notas):
 
     # Llenar los datos de la tabla
     for materia in materias:
-        fila = [materia]  # Inicializamos la fila con el nombre de la materia
-        notas_materia = [nota for nota in notas if nota["Materia"] == materia]  # Obtener las notas de la materia actual
+        fila = [materia] 
+        notas_materia = [nota for nota in notas if nota["Materia"] == materia]  
         for nota in notas_materia:
-            fila.append(nota["Nota"])  # Agregar la nota a la fila
-            fila.append(f"{nota['Porcentaje']}%")  # Agregar el porcentaje de la nota a la fila
-        # Rellenar con espacios en blanco si la materia tiene menos notas que el máximo
+            fila.append(nota["Nota"])  
+            fila.append(f"{nota['Porcentaje']}%") 
         fila += [''] * (len(data[0]) - len(fila))
         data.append(fila)
 

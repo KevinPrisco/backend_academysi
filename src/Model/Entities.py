@@ -72,6 +72,7 @@ class calificacion(Base):
 
     id = Column(Integer, primary_key=True, autoincrement= True)
     calificacion = Column(Float)
+    porcentaje = Column(Integer)
     # RELACIONES
     estudiante_id: Mapped[int] = mapped_column(ForeignKey("tb_estudiantes.id_estudiante"))
     rl_estudiante: Mapped["estudiante"] = relationship(back_populates="rl_calificacion")

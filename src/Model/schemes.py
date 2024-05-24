@@ -141,3 +141,12 @@ class groupList(groupBase):
 
 class groupCreate(BaseModel):
     descripcion: str
+
+
+
+
+class Nota(BaseModel):
+    id: int
+    materia: str
+    nota: float
+    porcentaje: int

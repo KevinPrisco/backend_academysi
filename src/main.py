@@ -14,6 +14,7 @@ app.include_router(teacherRoute.router)
 app.include_router(adminRoute.router)
 app.include_router(subjectRoute.router)
 app.include_router(groupRoute.router)
+app.include_router(gradeRoute.router)
 add_pagination(app)
 
 @app.get("/")

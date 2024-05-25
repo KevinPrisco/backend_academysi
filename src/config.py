@@ -12,10 +12,9 @@ pero para este caso y para ser men
 DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
 DB_PASSWORD = "123"
-DB_PORT: 3306
+DB_PORT: int | None = None
 DB_HOST = "localhost"
 DB_NAME = "academysibd"
-
 
 #JWT TOKEN 
 #Generar secret key en el bash -> "rand openssl -hexadecimal 32"

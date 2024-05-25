@@ -1,19 +1,19 @@
-version: "latest"
+# version: "latest"
 
-services:
-  backend:
-    build: .
-    ports: 
-      - "8000:8000"
-    links:
-      - database
+# services:
+#   backend:
+#     build: .
+#     ports: 
+#       - "8000:8000"
+#     links:
+#       - database
 
-  database:
-    image: mysql
-    ports: 
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+#   database:
+#     image: mysql
+#     ports: 
+#       - "3306:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#       MYSQL_DATABASE: ${DB_NAME}
+#       MYSQL_USER: ${DB_USER}
+#       MYSQL_PASSWORD: ${DB_PASSWORD}

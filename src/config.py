@@ -11,8 +11,8 @@ pero para este caso y para ser men
 #Variables de conexion con la base de datos
 DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
-DB_PASSWORD = ""
-DB_PORT: int | None = None
+DB_PASSWORD = "123"
+DB_PORT: 3306
 DB_HOST = "localhost"
 DB_NAME = "academysibd"
 

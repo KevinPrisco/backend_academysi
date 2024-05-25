@@ -2,6 +2,7 @@ FROM python:3.11.9
 
 # Establece el directorio de trabajo
 WORKDIR /code
+RUN mkdir -p /code/src
 
 # Copia el archivo requirements.txt en el directorio de trabajo
 COPY ./requirements.txt /code/requirements.txt
@@ -13,4 +14,4 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 COPY ./src /code/src
 
 # Establece el comando por defecto para ejecutar la aplicación
-CMD ["uvicorn", "src.main:app", "--host", "127.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

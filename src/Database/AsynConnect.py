@@ -7,7 +7,7 @@ from ..config import DB_DRIVER, DB_USER, DB_PASSWORD, DB_PORT, DB_HOST, DB_NAME
 SQLALCHEMY_DATABASE_URL = URL.create( 
     drivername=DB_DRIVER,
     username=DB_USER,
-    # password=DB_PASSWORD,
+    password=DB_PASSWORD,
     # port= DB_PORT,
     host=DB_HOST,
     database=DB_NAME

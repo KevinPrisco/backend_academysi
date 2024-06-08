@@ -3,7 +3,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from jose import jwt, JWTError
-from config import SECRET_KEY, ALGORITHM
+from ...config import SECRET_KEY, ALGORITHM
 
 
 #instancias de OAUTH2 Y passlib

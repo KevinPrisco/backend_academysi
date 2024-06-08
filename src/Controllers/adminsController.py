@@ -1,5 +1,5 @@
-from Controllers.Commons import *
-from Model.Entities import administrador
+from ..Controllers.Commons import *
+from ..Model.Entities import administrador
 
 async def getAdminById(db: Session, id_admin: int):
     try:

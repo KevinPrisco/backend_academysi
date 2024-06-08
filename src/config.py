@@ -1,12 +1,20 @@
-# "BDtype://user:password@dblocation/Dbname"
-# DB_CONNECT = "mysql://root:@localhost/academysibd"
+"""
+
+Aqui estan las Variables de entorno
+
+normalmente NO se suben y son un archivo .env 
+pero para este caso y para ser men
+
+
+"""
+
+#Variables de conexion con la base de datos
 DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
-DB_PASSWORD = ""
-DB_PORT: int | None = None
-DB_HOST = "localhost"
+DB_PASSWORD = "kevin123"
+DB_PORT = 3306
+DB_HOST = "database"
 DB_NAME = "academysibd"
-
 
 #JWT TOKEN 
 #Generar secret key en el bash -> "rand openssl -hexadecimal 32"

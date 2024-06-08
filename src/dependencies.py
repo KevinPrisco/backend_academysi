@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException
-from Services.Auth import Auth
+from .Services.Auth import Auth
 
 def get_current_user(token: str = Depends(Auth.token_access_validation)):
     if token["Message"] == 'Valido':

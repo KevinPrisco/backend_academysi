@@ -1,5 +1,5 @@
-from Controllers import groupsController
-from Routes.commons import *
+from ..Controllers import groupsController
+from .commons import *
 
 
 router  = APIRouter(

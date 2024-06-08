@@ -1,5 +1,5 @@
-from Controllers import studentsController
-from Routes.commons import *
+from ..Controllers import studentsController
+from .commons import *
 
 
 router  = APIRouter(

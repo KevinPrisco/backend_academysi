@@ -12,8 +12,8 @@ pero para este caso y para ser men
 DB_DRIVER = "mysql+aiomysql"
 DB_USER = "root"
 DB_PASSWORD = "kevin123"
-DB_PORT: int | None = None
-DB_HOST = "localhost"
+DB_PORT = 3306
+DB_HOST = "database"
 DB_NAME = "academysibd"
 
 #JWT TOKEN 

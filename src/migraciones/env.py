@@ -2,10 +2,10 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
-from Database.AsynConnect import Base
-from Model import *
+from src.Database.AsynConnect import Base
+from src.Model import *
 
-DB_CONNECT = "mysql://root:@localhost/academysibd"
+DB_CONNECT = "mysql://root:kevin123@database:3306/academysibd"
 db_url: str = str(DB_CONNECT)
 config = context.config
 config.set_main_option('sqlalchemy.url', db_url)

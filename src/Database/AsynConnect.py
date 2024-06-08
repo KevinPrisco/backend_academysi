@@ -8,7 +8,7 @@ SQLALCHEMY_DATABASE_URL = URL.create(
     drivername=DB_DRIVER,
     username=DB_USER,
     password=DB_PASSWORD,
-    # port= DB_PORT,
+    port= DB_PORT,
     host=DB_HOST,
     database=DB_NAME
  )

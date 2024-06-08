@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # Copia el contenido del directorio src en el directorio de trabajo
 COPY ./src /code/src
 
-EXPOSE 8000
+EXPOSE 80
 
 # Establece el comando por defecto para ejecutar la aplicación
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
